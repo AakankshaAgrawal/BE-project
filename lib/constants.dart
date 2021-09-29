@@ -25,4 +25,8 @@ List<FFNavigationBarItem> items = [
 ];
 
 List Productlist;
-String ngrok="https://d344d975cbe6.ngrok.io";
+String Farmerid;
+String Name;
+String Email;
+String Password;
+String ngrok="https://5cfb-27-106-11-47.ngrok.io";

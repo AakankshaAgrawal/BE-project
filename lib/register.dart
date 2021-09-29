@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:be_project/home.dart';
 import 'package:be_project/addproduct.dart';
-
+import 'constants.dart';
+import 'API.dart';
 
 class Register extends StatefulWidget {
   static String route = 'register';
@@ -11,8 +12,13 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  APIservice apIservice = APIservice();
 
-  final usernameController = new TextEditingController();
+  sendRegister() async {
+    await apIservice.registerFarmer();
+  }
+
+  final phonenoController = new TextEditingController();
   final nameController = new TextEditingController();
   final emailController = new TextEditingController();
   final passwordController = new TextEditingController();
@@ -63,7 +69,7 @@ class _RegisterState extends State<Register> {
                         width: 380,
                         padding: EdgeInsets.fromLTRB(20.0, 0.0, 5.0, 3.0),
                         child: TextFormField(
-                          controller: usernameController,
+                          controller: phonenoController,
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Please enter your Mobile Number';
@@ -172,6 +178,11 @@ class _RegisterState extends State<Register> {
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () {
+                              Farmerid=phonenoController.text;
+                              Name=nameController.text;
+                              Email=emailController.text;
+                              Password=passwordController.text;
+                              sendRegister();
                               Navigator.pushNamed(context, Home.route);
                             },
                             shape: RoundedRectangleBorder(
