@@ -1,6 +1,11 @@
+import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'dropdown_data.dart';
-
+import 'package:be_project/constants.dart';
+import 'API.dart';
+import 'package:be_project/home.dart';
+import 'package:be_project/ngos.dart';
+import 'package:be_project/profile.dart';
 class Addproduct extends StatefulWidget {
   static String route = 'addproduct';
   @override
@@ -63,37 +68,28 @@ class _AddproductState extends State<Addproduct> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              color: Colors.teal,
-            ),
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
+        appBar: AppBar(
+          backgroundColor: Colors.orange[700],
+          title: Text("AVSHESH"),
+        ),
+
+        body:  Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      //add product label
-                      Center(
-                        child: Text(
-                          "ADD PRODUCT",
-                          style: TextStyle(fontSize: 20.0),
-                        ),
-                      ),
 
                       //stubble type dropdown
                       Center(
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(100.0, 10.0, 80.0, 0.0),
+                          padding: EdgeInsets.all(10),
+                          width: 300,
                           child: DropdownButton<String>(
                               value: selectedStubble,
                               items: getDropdownItems(),
                               isExpanded: true,
                               style: TextStyle(
-                                  color: Colors.black, fontSize: 20.0),
+                                  color: Colors.orange[700], fontSize: 20.0),
                               onChanged: (value) {
                                 setState(() {
                                   selectedStubble = value;
@@ -103,55 +99,90 @@ class _AddproductState extends State<Addproduct> {
                       ),
                       //quantity, price, add button
 
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Row(
+                        
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: TextField(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'QUANTITY',
+                                ),
+                              ),
+                            flex: 2,
+                          ),
+
+                            SizedBox(
+                                width: 20
+                            ),
+
+                            Expanded(
+                              child: Container(
+                                width: 100,
+                                child: DropdownButton<String>(
+                                    value: selectedWeight,
+                                    items: getWeightItems(),
+                                    isExpanded: true,
+                                    style:
+                                    TextStyle(color: Colors.orange[700], fontSize: 18.0),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedWeight = value;
+                                      });
+                                    }),
+                              ),
+                              flex: 2,
+                            ),
+                        ],
+                      ),
+                    ),
+
+
+
                       Container(
                         padding: EdgeInsets.all(10),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'QUANTITY',
-                          ),
+                        child:
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'PRICE',
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(
+                                width: 20
+                            ),
+
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                width: 100,
+                                child: DropdownButton<String>(
+                                    value: selectedPrice,
+                                    items: getPriceItems(),
+                                    isExpanded: true,
+                                    style:
+                                    TextStyle(color: Colors.orange[700], fontSize: 18.0),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedPrice = value;
+                                      });
+                                    }),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
 
-                      Container(
-                        padding: EdgeInsets.fromLTRB(100.0, 0.0, 80.0, 0.0),
-                        child: DropdownButton<String>(
-                            value: selectedWeight,
-                            items: getWeightItems(),
-                            isExpanded: true,
-                            style:
-                            TextStyle(color: Colors.black, fontSize: 20.0),
-                            onChanged: (value) {
-                              setState(() {
-                                selectedWeight = value;
-                              });
-                            }),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'PRICE',
-                          ),
-                        ),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.fromLTRB(100.0, 0.0, 80.0, 0.0),
-                        child: DropdownButton<String>(
-                            value: selectedPrice,
-                            items: getPriceItems(),
-                            isExpanded: true,
-                            style:
-                            TextStyle(color: Colors.black, fontSize: 20.0),
-                            onChanged: (value) {
-                              setState(() {
-                                selectedPrice = value;
-                              });
-                            }),
-                      ),
 
                       Center(
                         child: Container(
@@ -159,7 +190,7 @@ class _AddproductState extends State<Addproduct> {
                             minWidth: 100.0,
                             height: 50.0,
                             child: RaisedButton(
-                              color: Colors.teal,
+                              color: Colors.orange[700],
                               child: Text(
                                 'ADD',
                                 style: TextStyle(color: Colors.white),
@@ -168,7 +199,7 @@ class _AddproductState extends State<Addproduct> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                   side: BorderSide(
-                                    color: Colors.teal,
+                                    color: Colors.orange[700],
                                     width: 5.0,
                                   )),
                             ),
@@ -177,27 +208,39 @@ class _AddproductState extends State<Addproduct> {
                       ),
                     ],
                   ),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50)),
-                  ),
-                  height: MediaQuery.of(context).size.height * 0.68,
                 ),
-              ),
+
+          bottomNavigationBar: FFNavigationBar(
+            theme: FFNavigationBarTheme(
+              barBackgroundColor: Colors.white,
+              selectedItemBorderColor: Colors.transparent,
+              selectedItemBackgroundColor: Colors.green,
+              selectedItemIconColor: Colors.white,
+              selectedItemLabelColor: Colors.black,
+              showSelectedItemShadow: false,
+              barHeight: 70,
             ),
-          ],
-        ),
-      ),
-    );
+
+            selectedIndex: selectedIndex,
+
+            onSelectTab: (index){
+              setState(() {
+                selectedIndex = index;
+                if (selectedIndex == 0) {
+                  Navigator.pushNamed(context, Home.route);
+                } else if (selectedIndex == 1) {
+                  Navigator.pushNamed(context, Addproduct.route);
+                } else if (selectedIndex == 2) {
+                  Navigator.pushNamed(context, Ngos.route);
+                } else if (selectedIndex == 3) {
+                  Navigator.pushNamed(context, Profile.route);
+                }
+              });
+            },
+
+            items: items,
+          )
+      )
+              );
   }
 }
